@@ -1,4 +1,4 @@
-import { createLogger, format, transports, addColors } from 'winston';
+import winston, { createLogger, format, transports, addColors } from 'winston';
 const { combine, timestamp, printf, colorize } = format;
 
 const levels = {
@@ -17,7 +17,7 @@ const colors = {
     debug: 'white',
 };
 
-const initLog = () => {
+const initLog = (): winston.Logger => {
     addColors(colors);
     const Logger = createLogger({
         level: level(),
@@ -29,13 +29,13 @@ const initLog = () => {
     return Logger;
 }
 
-const level = () => {
+const level = (): string => {
     const env = process.env.NODE_ENV || 'development'
     const isDevelopment = env === 'development'
     return isDevelopment ? 'debug' : 'warn'
 }
 
-const formatter = () => {
+const formatter = (): winston.Logform.Format => {
     return combine(
         timestamp({ format: 'YYYY-MM-DD HH:mm:ss:ms' }),
         colorize({ all: true }),
@@ -45,7 +45,8 @@ const formatter = () => {
     );
 }
 
-const transport = () => {
+const transport = (): (winston.transports.ConsoleTransportInstance |
+    winston.transports.FileTransportInstance)[] => {
     return [
         new transports.Console(),
         new transports.File({
