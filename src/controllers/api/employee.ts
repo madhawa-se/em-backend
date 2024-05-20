@@ -8,7 +8,7 @@ export default (): Router => {
   const router = Router();
   router.use(bodyParser.json());
 
-  router.get("/", async (req, res, next) => {
+  router.get("/", async (_req, res, next) => {
     try {
       const employees = await getEmployees();
       res.status(200).send(employees);

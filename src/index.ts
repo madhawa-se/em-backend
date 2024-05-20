@@ -12,7 +12,7 @@ Logger.info("Running the app");
 
 app.use("/api/v1", api());
 
-app.get('/', (req, res) => {
+app.get('/', (_req, res) => {
   res.send('Hello World!')
 })
 
