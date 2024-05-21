@@ -23,6 +23,6 @@ app.get('/', (_req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
+  console.log(`Employee Manager API listening on port ${port}`)
 });
 export default httpServer;
