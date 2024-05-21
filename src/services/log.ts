@@ -49,11 +49,11 @@ const transport = (): (winston.transports.ConsoleTransportInstance |
     winston.transports.FileTransportInstance)[] => {
     return [
         new transports.Console(),
-        new transports.File({
-            filename: 'logs/error.log',
-            level: 'error',
-        }),
-        new transports.File({ filename: 'logs/all.log' }),
+        // new transports.File({
+        //     filename: 'logs/error.log',
+        //     level: 'error',
+        // }),
+        // new transports.File({ filename: 'logs/all.log' }),
     ]
 }
 

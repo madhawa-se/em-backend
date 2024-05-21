@@ -1,4 +1,5 @@
 import { RequestHandler } from "express";
+import { ObjectSchema } from "joi";
 
 interface ValidationError {
   message: string;
@@ -24,7 +25,7 @@ const validationOptions = {
   stripUnknown: false,
 };
 
-const schemaValidator = (schema, useJoiError = true): RequestHandler => {
+const schemaValidator = (schema: ObjectSchema, useJoiError = true): RequestHandler => {
 
   return (req, res, next) => {
 
