@@ -33,7 +33,6 @@
     "dev": "tsx watch --env-file=.env src",
     "clean": "rimraf coverage build tmp",
     "prebuild": "npm run lint",
-    "vercel-build": "echo build",
     "build": "tsc && npm run copy-docs",
     "build:watch": "tsc -w -p tsconfig.json",
     "build:release": "npm run clean && tsc -p tsconfig.release.json",
