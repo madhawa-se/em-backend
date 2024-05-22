@@ -7,6 +7,7 @@ import cors from 'cors';
 
 import swaggerUi from "swagger-ui-express";
 import { swaggerDoc } from './docs/swagger';
+import { swaggerCss } from './config/doc-config';
 // import YAML from "yamljs";
 // const swaggerDocument = YAML.load("src/docs/swagger.yaml");
 
@@ -22,7 +23,8 @@ Logger.info("Running the app");
 
 
 app.use("/api/v1", api());
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDoc));
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDoc,{ ...swaggerCss }));
+
 
 app.get('/', (_req, res) => {
   res.send('Employee REST API V 1.0');
