@@ -1,23 +1,32 @@
 import { Employee } from "../db/schemas/employee-schemas";
-import { IEmployee } from "../defs/interfaces/Employee";
+import { Gender, IEmployee } from "../defs/interfaces/Employee";
 
 
 export const createEmployee = (employee: IEmployee): Promise<IEmployee | null> => {
     const fakePhotoId = Math.floor(Math.random() * 100);
-    const employeeObj = new Employee({ ...employee, photo: `https://randomuser.me/api/portraits/men/${fakePhotoId}.jpg` });
+    const employeeObj = new Employee({ ...employee, photo: `https://randomuser.me/api/portraits/${(employee.gender===Gender.Male)?"men":"women"}/${fakePhotoId}.jpg` });
     return employeeObj.save();
 };
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export const getEmployees = (_sort?: string[]): Promise<IEmployee[] | null> => {
-    return Employee.find();
+export const getEmployees = (sort?: { key: string, orderby: string }): Promise<IEmployee[] | null> => {
+
+    let employees = Employee.find();
+    if (sort) {
+
+        const orderVal = sort.orderby === 'asc' ? 1 : -1;
+        const obj:{ [key: string]: 1 | -1 } = {
+            [sort.key]: orderVal,
+          }
+        employees = employees.sort(obj);
+    }
+    return employees;
 };
 
 export const getEmployee = (id: string): Promise<IEmployee | null> => {
     return Employee.findOne({ _id: id });
 };
 
-export const updateEmployee = (id: string, employeeData: Partial<IEmployee>):Promise<IEmployee | null> => {
+export const updateEmployee = (id: string, employeeData: Partial<IEmployee>): Promise<IEmployee | null> => {
     return Employee.findOneAndUpdate({ _id: id }, { ...employeeData }, { new: true });
 };
 

@@ -8,8 +8,17 @@ export default (): Router => {
   const router = Router();
   router.use(bodyParser.json());
 
-  router.get("/", async (_req, res, next) => {
+  router.get("/", async (req, res, next) => {
     try {
+
+      const sort = req.query.sort as string;
+      const orderby = req.query.orderby as string;
+
+      if (sort) {
+        const employees = await getEmployees({ key: sort, orderby: orderby });
+        return res.status(200).send(employees);
+      }
+
       const employees = await getEmployees();
       res.status(200).send(employees);
     } catch (e) {
